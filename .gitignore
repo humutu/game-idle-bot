@@ -1,0 +1,20 @@
+# 运行环境
+.venv/
+__pycache__/
+*.py[cod]
+
+# 运行产物
+captures/
+logs/
+*.log
+.run-config.yaml
+
+# 游戏截图模板（含游戏画面，默认不提交）
+templates/*.png
+templates/*.json
+
+# 打包产物
+dist/
+build/
+*.spec
+*.zip
