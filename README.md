@@ -10,9 +10,15 @@ Windows 上的小游戏自动化小工具：**窗口截图 + 模板匹配 + Wind
 
 > **使用前必读**：[DISCLAIMER.md](DISCLAIMER.md)。自动化可能违反游戏用户协议，账号风险自担；本项目与任何游戏官方无关。
 
-> **仓库不含模板图。** 模板必须从你自己的游戏画面里裁。
-> 第一次使用请先按 [templates/README.md](templates/README.md) 和 [docs/模板制作.md](docs/模板制作.md) 制作模板（默认规则需要 11 张；启用「额外机会-获得」时再裁第 12 张），否则启动时会提示找不到模板。
-> 裁剪工具会在模板旁边写一个同名 `.json` 记录当时的窗口宽度，之后改窗口大小会自动按比例缩放模板。
+## 下载即用（推荐）
+
+到 [Releases](https://github.com/humutu/game-idle-bot/releases/latest) 下载 `game-idle-bot-v1.0.0.exe`，放进任意空文件夹，双击运行。
+
+- **不用装 Python，也不用截图裁模板**：默认配置和 12 张模板已内置，首次运行会自动释放到 exe 同目录。
+- 支持 Windows 10 / 11 64 位；OCR 需要系统中文语言包（设置 → 时间和语言 → 语言和区域）。
+- 游戏保持窗口化，不要最小化；默认按标题「小游戏」找窗口，对不上就改同目录 `config.yaml` 第一行。
+- 启动后浏览器会打开 <http://127.0.0.1:8765/>，选模式、点卡牌开始；**F8** 暂停/继续，**F9** 停止。
+- 模板会按当前窗口宽度自动缩放；如果游戏改版或 `probe` 分数不够，再按下面的源码方式重裁模板。
 
 ---
 
@@ -32,16 +38,25 @@ Windows 上的小游戏自动化小工具：**窗口截图 + 模板匹配 + Wind
 
 ## 环境要求
 
-- Windows 10 / 11，64 位
+**直接运行 exe**：Windows 10 / 11 64 位，无需 Python。
+
+**从源码运行**：
+
+- Windows 10 / 11 64 位
 - Python 3.12（3.10+ 理论可用，本项目只在 3.12 上验证过）
-- 游戏窗口：窗口化运行，**不要最小化**，不要被其它窗口完全遮挡
-- 窗口大小可以变：模板会按裁剪时的参考宽度自动缩放；但差距过大或 DPI 变化后，建议重跑 `probe` 确认分数
-- 显示缩放（DPI）保持固定，例如一直是 100% 或一直是 125%
 - 首次安装依赖需要联网
 
-依赖见 [requirements.txt](requirements.txt)：`pywin32`、`mss`、`opencv-python`、`numpy`、`pyyaml`、`winocr`、`pillow`。
+**通用**：
 
-## 快速开始
+- 游戏窗口：窗口化运行，**不要最小化**，不要被其它窗口完全遮挡
+- 窗口大小可以变：模板会按参考宽度自动缩放；但差距过大或 DPI 变化后，建议重跑 `probe` 确认分数
+- 显示缩放（DPI）保持固定，例如一直是 100% 或一直是 125%
+
+源码依赖见 [requirements.txt](requirements.txt)：`pywin32`、`mss`、`opencv-python`、`numpy`、`pyyaml`、`winocr`、`pillow`。
+
+## 从源码运行（开发 / 自定义模板）
+
+> 仓库代码不含模板图。需要自己裁模板时，按 [templates/README.md](templates/README.md) 和 [docs/模板制作.md](docs/模板制作.md) 操作：默认 11 张，启用「额外机会-获得」再裁第 12 张。裁剪工具会在模板旁写同名 `.json` 记录窗口宽度，之后改窗口大小会自动缩放。
 
 ### 1. 安装运行环境（只做一次）
 
@@ -64,9 +79,9 @@ py -3.12 -m venv .venv
 
 标题不是「小游戏」的话，改 `config.yaml` 第一行的 `window`（支持正则）。
 
-### 3. 制作模板
+### 3. 制作模板（自定义时）
 
-仓库不附带游戏截图。按 [templates/README.md](templates/README.md) 的清单，逐个界面执行：
+按 [templates/README.md](templates/README.md) 的清单，逐个界面执行：
 
 ```bat
 .venv\Scripts\python.exe -m gamebot.tools snapshot --window 小游戏
@@ -331,8 +346,10 @@ git push -u origin main
 
 建议仓库名用中性描述（例如 `game-idle-bot`），不要带游戏商标。README 已经说明本项目与任何游戏官方无关。
 
+提供下载即用版时，在 Releases 上传单文件 exe 即可。该 exe 内置默认配置和模板，首次运行会在 exe 同目录释放，不依赖仓库源码。
+
 ## 许可证
 
-代码使用 [MIT License](LICENSE)。游戏内容、商标归各自权利人所有；本仓库不包含游戏素材。
+代码使用 [MIT License](LICENSE)。游戏内容、商标归各自权利人所有；仓库代码不包含游戏素材，下载即用 exe 内的模板截图仅用于画面识别。
 
 使用前请阅读 [DISCLAIMER.md](DISCLAIMER.md)。
